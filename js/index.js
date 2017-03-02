@@ -10,7 +10,7 @@ search.addEventListener('click', function(){
       var data = crossfilter(res);
       var ratingDimension = data.dimension(function(d) {return d.rating;});
       var group = function(p){ return "movies"};
-      //table creation      
+      //table creation : to show movies of director     
       var table = new dc.dataTable('#table');
       table.columns([
           function(d) { return d.category },
@@ -22,6 +22,13 @@ search.addEventListener('click', function(){
       table.group(group);
       table.render();
      
+     //pie chart : to show categogies of movies director did
+     var catDimension = data.dimension(function(d) {return d.category}); 
+     var catGroup = catDimension.group().reduceCount();
+     var pie = new dc.pieChart('#chart');
+     pie.dimension(catDimension);
+     pie.group(catGroup);
+     pie.render();
     });
   });  
 });
